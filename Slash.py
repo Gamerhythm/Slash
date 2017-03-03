@@ -55,6 +55,11 @@ async def on_message(message):
                 response = str(profanity.censor(response))
         await client.send_message(message.channel, message.author.mention + " " + response)
 
+    if message.content.startswith('$$reload'):
+        cw = [line.rstrip('\n') for line in open('controversialwords.txt')]
+        profanity.load_words(cw)
+        await client.send_message(message.channel, message.author.mention + " **Controversial words reloaded!**")
+
 @client.event
 async def on_ready():
     print(' ')
