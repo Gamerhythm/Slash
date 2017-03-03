@@ -39,7 +39,7 @@ chatbot.train(
     "chatterbot.corpus.english.conversations"
 )
 
-cw = ["hitler", "jew", "nazi", "nigger", "heil"]
+cw = [line.rstrip('\n') for line in open('controversialwords.txt')]
 profanity.load_words(cw)
 
 @client.event
