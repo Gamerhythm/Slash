@@ -45,6 +45,7 @@ profanity.load_words(cw)
 @client.event
 async def on_message(message):
     if message.content.startswith(client.user.mention):
+        InitialMsg = await client.send_message(message.channel, message.author.mention + " **Thinking...**")
         SlashResponse = message.content
         SlashResponse = SlashResponse.replace(client.user.mention, "")
         if profanity.contains_profanity(SlashResponse):
@@ -53,7 +54,7 @@ async def on_message(message):
             response = str(chatbot.get_response(SlashResponse))
             if profanity.contains_profanity(response):
                 response = str(profanity.censor(response))
-        await client.send_message(message.channel, message.author.mention + " " + response)
+        await client.edit_message(InitialMsg, message.author.mention + " " + response)
 
     if message.content.startswith('$$reload'):
         cw = [line.rstrip('\n') for line in open('controversialwords.txt')]
